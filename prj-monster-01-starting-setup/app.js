@@ -61,7 +61,8 @@ const app = Vue.createApp({
       } else {
         this.playerHealth += healValue;
       }
-      this.nextRound(finalHealValue);
+      this.addLogMessage('player', 'heal', finalHealValue);
+      this.nextRound();
     },
 
     addLogMessage(who, what, value) {
@@ -75,6 +76,10 @@ const app = Vue.createApp({
     nextRound() {
       this.attackPlayer();
       if (this.specialAttackCount > 0) this.specialAttackCount--;
+    },
+
+    getActionByClass(actionBy) {
+      return actionBy === 'player' ? 'log--player' : 'log--monster';
     },
   },
 

@@ -52,7 +52,7 @@
       <ul>
         <li v-for="log in logMessages">
           [
-          <span class="log--player">{{log.actionBy}}</span>
+          <span :class="getActionByClass(log.actionBy)">{{log.actionBy}}</span>
           <span v-if="log.actionType === 'heal'">
             heals himself for
             <span class="log--heal">
