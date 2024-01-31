@@ -2,17 +2,26 @@
   <header>
     <h1>My Friends</h1>
   </header>
+  <NewFriend @addFriendData="addFriendData" />
   <ul>
-    <FriendContact v-for="friend in friends" :key="friend" :friend="friend" />
+    <FriendContact
+      v-for="friend in friends"
+      :key="friend"
+      :friend="friend"
+      @toggleFavorite="toggleFavorite"
+      @deleteFriend="deleteFriend"
+    />
   </ul>
 </template>
 
 <script>
 import FriendContact from './components/FriendContact.vue';
+import NewFriend from './components/NewFriend.vue';
 
 export default {
   components: {
     FriendContact,
+    NewFriend,
   },
   data() {
     return {
@@ -22,15 +31,36 @@ export default {
           name: 'Manuel Lorenz',
           phone: '010 1234 1234',
           email: 'test1@test.com',
+          isFavorite: true,
         },
         {
           id: 'julie!',
           name: 'Julie Jones',
           phone: '010 3456 3453',
           email: 'test2@test.com',
+          isFavorite: true,
         },
       ],
     };
+  },
+  methods: {
+    toggleFavorite(id) {
+      const ChangeFavoriteFriendsData = this.friends.map(friend => {
+        if (friend.id === id && id) {
+          return { ...friend, isFavorite: !friend.isFavorite };
+        } else {
+          return friend;
+        }
+      });
+      this.friends = ChangeFavoriteFriendsData;
+    },
+    addFriendData(data) {
+      console.log(data);
+      this.friends.push({ ...data, isFavorite: false });
+    },
+    deleteFriend(id) {
+      this.friends = this.friends.filter(friend => friend.id !== id);
+    },
   },
 };
 </script>
@@ -92,6 +122,7 @@ header {
   background-color: #ff0077;
   color: white;
   padding: 0.05rem 1rem;
+  margin: 0 0.3rem;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.26);
 }
 
