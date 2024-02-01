@@ -55,7 +55,6 @@ export default {
       this.friends = ChangeFavoriteFriendsData;
     },
     addFriendData(data) {
-      console.log(data);
       this.friends.push({ ...data, isFavorite: false });
     },
     deleteFriend(id) {
